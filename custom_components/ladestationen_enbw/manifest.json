@@ -1,0 +1,13 @@
+{
+  "domain": "ladestationen_enbw",
+  "name": "Ladestationen EnBW",
+  "codeowners": [
+    "@niro93"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/niro93/ha-ladestationen_enbw",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/niro93/ha-ladestationen_enbw/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}

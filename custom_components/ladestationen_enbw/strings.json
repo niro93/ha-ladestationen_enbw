@@ -1,0 +1,61 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Ladestationen EnBW",
+        "description": "API-Schlüssel und Abfrageintervall werden gemeinsam für alle Ladestationen verwendet. Bei weiteren Stationen werden die gespeicherten Werte wiederverwendet. An der eingegebenen Adresse werden Ladestationen im festen Umkreis von 0,5 km gesucht. Die Adresse wird über OpenStreetMap Nominatim geocodiert. Geocodierung: © OpenStreetMap-Mitwirkende.",
+        "data": {
+          "api_key": "Ocp-Apim-Subscription-Key (global)",
+          "address": "Adresse der gewünschten Ladestation",
+          "scan_interval": "Globales Abfrageintervall (Sekunden)"
+        }
+      },
+      "station": {
+        "title": "Ladestation auswählen",
+        "data": { "station_id": "Station" }
+      }
+    },
+    "error": {
+      "invalid_auth": "Der API-Schlüssel wurde abgelehnt.",
+      "cannot_connect": "Verbindung zur EnBW-API nicht möglich.",
+      "cannot_geocode": "Adresse konnte nicht gefunden oder nicht in Koordinaten umgewandelt werden.",
+      "no_stations": "Im Umkreis von 0,5 km wurden keine Stationen von der EnBW-API gefunden."
+    },
+    "abort": {
+      "no_stations": "Im Umkreis von 0,5 km wurden keine Stationen von der EnBW-API gefunden."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Integration konfigurieren",
+        "description": "API-Schlüssel und Abfrageintervall gelten global für alle Ladestationen. Lass das Schlüsselfeld leer, um den bisherigen Schlüssel beizubehalten. Ein neuer Schlüssel wird vor dem Speichern geprüft.",
+        "data": {
+          "api_key": "Neuer globaler Ocp-Apim-Subscription-Key (optional)",
+          "scan_interval": "Globales Abfrageintervall (Sekunden)"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Der API-Schlüssel wurde abgelehnt.",
+      "cannot_connect": "Verbindung zur EnBW-API nicht möglich."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "station_location": {
+        "name": "Standort"
+      },
+      "charge_point_status": {
+        "name": "{plug_type} Ladepunkt {index}",
+        "state": {
+          "occupied": "Belegt",
+          "available": "Verfügbar",
+          "unknown": "Unbekannt",
+          "out_of_service": "Außer Betrieb",
+          "blocked": "Blockiert"
+        }
+      }
+    }
+  }
+}
