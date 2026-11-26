@@ -29,13 +29,7 @@ Den Schlüssel nicht öffentlich teilen. Er wird global für alle Stationen gesp
 - Suche anhand einer Adresse im festen Umkreis von 0,5 km
 - Sensoren für freie und gesamte CCS-, Typ-2- und CHAdeMO-Ladepunkte sowie den Status einzelner Ladepunkte
 - Globales Abfrageintervall: Standard 300 Sekunden, einstellbar von 60 bis 3600 Sekunden
-- Standort jeder Station auf einer Home-Assistant-Map-Karte; beim Antippen zeigt der Zustand die verfügbaren Ladepunkte, zum Beispiel `CCS: 3/4 frei`
-
-```yaml
-type: map
-entities:
-  - entity: sensor.<station>_standort
-```
+- Standort-Entität für jede Station zur Anzeige auf einer Home-Assistant-Map-Karte
 
 ## Hinweise
 

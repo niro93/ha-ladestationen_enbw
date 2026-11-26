@@ -52,7 +52,7 @@ async def async_setup_entry(
     )
     if latitude is not None and longitude is not None:
         entities.append(
-            EnbwStationLocationSensor(coordinator, entry, latitude, longitude)
+            EnbwStationLocationSensor(entry, latitude, longitude)
         )
     present_types = set()
     for plug_type in CONNECTOR_TYPES:
@@ -95,15 +95,14 @@ async def async_setup_entry(
     async_add_entities(entities)
 
 
-class EnbwStationLocationSensor(CoordinatorEntity, SensorEntity):
-    """Expose a station marker and useful counts for Home Assistant maps."""
+class EnbwStationLocationSensor(SensorEntity):
+    """Expose station coordinates for Home Assistant maps."""
 
     _attr_has_entity_name = True
     _attr_translation_key = "station_location"
     _attr_icon = "mdi:map-marker"
 
-    def __init__(self, coordinator, entry, latitude, longitude) -> None:
-        super().__init__(coordinator)
+    def __init__(self, entry, latitude, longitude) -> None:
         self._latitude = float(latitude)
         self._longitude = float(longitude)
         self._attr_unique_id = f"{entry.data[CONF_STATION_ID]}_location"
@@ -115,37 +114,13 @@ class EnbwStationLocationSensor(CoordinatorEntity, SensorEntity):
 
     @property
     def native_value(self) -> str:
-        """Return a concise live availability summary for the map popup."""
-        summaries = []
-        for plug_type in CONNECTOR_TYPES:
-            points = charge_points_for_type(self.coordinator.data, plug_type)
-            if not points:
-                continue
-            available = sum(
-                point.get("status") == "AVAILABLE" for point in points
-            )
-            summaries.append(
-                f"{PLUG_TYPE_NAMES[plug_type]}: {available}/{len(points)} frei"
-            )
-        return " · ".join(summaries) or "Keine unterstützten Ladepunkte"
+        """Return a simple location state without a count summary."""
+        return "Standort"
 
     @property
     def extra_state_attributes(self) -> dict:
-        """Provide map coordinates and available/total connector counts."""
-        attributes = {
-            "latitude": self._latitude,
-            "longitude": self._longitude,
-        }
-        for plug_type in CONNECTOR_TYPES:
-            points = charge_points_for_type(self.coordinator.data, plug_type)
-            if not points:
-                continue
-            name = PLUG_TYPE_NAMES[plug_type]
-            attributes[f"{name} frei"] = sum(
-                point.get("status") == "AVAILABLE" for point in points
-            )
-            attributes[f"{name} gesamt"] = len(points)
-        return attributes
+        """Provide only the coordinates needed by the map card."""
+        return {"latitude": self._latitude, "longitude": self._longitude}
 
 
 class EnbwCountSensor(CoordinatorEntity, SensorEntity):
